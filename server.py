@@ -16,10 +16,20 @@ WHAT'S ACTUALLY HAPPENING HERE (for the "teach me" part):
   comment - Claude actually reads it to know what the tool does and how to use it.
 """
 
+import os
 from mcp.server.fastmcp import FastMCP
 
 # This name shows up when the server identifies itself - can be anything.
-mcp = FastMCP("finance-calculator")
+#
+# host="0.0.0.0" means "accept connections from anywhere," not just this machine.
+# port reads from the PORT environment variable that hosting platforms set
+# automatically at runtime - falls back to 8000 if it's not set (e.g. running
+# locally on your own machine for testing).
+mcp = FastMCP(
+    "finance-calculator",
+    host="0.0.0.0",
+    port=int(os.environ.get("PORT", 8000)),
+)
 
 
 # 2026 IRS Roth IRA contribution limits (update these yearly - they change most years)
